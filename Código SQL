@@ -1,0 +1,76 @@
+CREATE TABLE tabela_usuario(
+id_usuario VARCHAR(10) NOT NULL,
+nome_completo VARCHAR(50) NOT NULL,
+usuario VARCHAR(20) NOT NULL,
+email VARCHAR(50) NOT NULL,
+data_nascimento DATE NOT NULL,
+senha VARCHAR(20) NOT NULL,
+data_cadastro DATE NOT NULL,
+PRIMARY KEY(id_usuario)
+);
+
+
+CREATE TABLE tabela_img_usuario(
+id_usuario VARCHAR(10) NULL,
+numero_img VARCHAR(10) NOT NULL,
+img_usuario BLOB,
+PRIMARY KEY(numero_img)
+);
+
+
+ALTER TABLE tabela_img_usuario
+ADD CONSTRAINT fk_tabela_usuario
+FOREIGN KEY (id_usuario) REFERENCES tabela_usuario (id_usuario);
+
+
+CREATE TABLE tabela_receitas(
+cod_receitas VARCHAR(10) NOT NULL,
+id_usuario VARCHAR(10) NOT NULL,
+categoria VARCHAR(15),
+nome_receita VARCHAR(100) NOT NULL,
+data_publicacao DATE NOT NULL,
+porcao INTEGER NOT NULL,
+tempo_preparo DATE NOT NULL,
+mod_preparo1_var VARCHAR(500),
+mod_preparo2_var VARCHAR(500),
+mod_preparo3_var VARCHAR(500),
+mod_preparo4_var VARCHAR(500),
+mod_preparo5_var VARCHAR(500),
+ingredientes_mp1_var VARCHAR(200),
+ingredientes_mp2_var VARCHAR(200),
+ingredientes_mp3_var VARCHAR(200),
+ingredientes_mp4_var VARCHAR(200),
+ingredientes_mp5_var VARCHAR(200),
+PRIMARY KEY(cod_receitas)
+);
+
+ALTER TABLE tabela_receitas
+ADD CONSTRAINT fk_usuarioum
+FOREIGN KEY (id_usuario) REFERENCES tabela_usuario (id_usuario);
+
+
+CREATE TABLE tabela_img_receita(
+cod_img VARCHAR(10)  NOT NULL,
+cod_receitas VARCHAR(10)  NULL,
+titulo_img_receita VARCHAR(50),
+img_receita BLOB,
+PRIMARY KEY(cod_img)
+);
+
+ALTER TABLE tabela_img_receita
+ADD CONSTRAINT fk_tabela_receitas
+FOREIGN KEY (cod_receitas) REFERENCES tabela_receitas (cod_receitas);
+
+
+CREATE TABLE tabela_comentario(
+cod_comentario VARCHAR(10) NOT NULL,
+id_usuario VARCHAR(10)  NULL,
+data_comentario DATE,
+comentario VARCHAR(400),
+PRIMARY KEY(cod_comentario)
+);
+
+
+ALTER TABLE tabela_comentario
+ADD CONSTRAINT fk_usuario_dois
+FOREIGN KEY (id_usuario) REFERENCES tabela_usuario (id_usuario);
